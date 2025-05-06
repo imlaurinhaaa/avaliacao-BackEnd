@@ -26,12 +26,12 @@ const getTarefaById = async (req, res) => {
 // Criar uma nova tarefa | POST tarefas
 const createTarefa = async (req, res) => {
     try {
-        const { name, status_tarefa, description } = req.body;
+        const { projeto_id, name, status_tarefa, description } = req.body;
         const photo = req.file ? req.file.filename : null;
         if (status_tarefa !== "Pendente" && status_tarefa !== "Em andamento" && status_tarefa !== "Concluído") {
             return res.status(400).json({ message: "Status inválido! Escolha entre Pendente, Em andamento ou Concluído." });
         }    
-        const newTarefa = await tarefaModel.createTarefa(name, photo, status_tarefa, description);
+        const newTarefa = await tarefaModel.createTarefa(projeto_id, name, photo, status_tarefa, description);
         res.status(201).json({ message: "Tarefa criada com sucesso!", newTarefa });
     } catch (error) {
         res.status(404).json({ message: "Erro ao criar a tarefa", error });
@@ -41,12 +41,12 @@ const createTarefa = async (req, res) => {
 // Atualizar uma tarefa | PUT tarefas/:id
 const updateTarefa = async (req, res) => {
     try {
-        const { name, status_tarefa, description } = req.body;
-        const updatedTarefa = await tarefaModel.updateTarefa(req.params.id, name, status_tarefa, description);
+        const { status_tarefa } = req.body;
+        const updatedTarefa = await tarefaModel.updateTarefa(req.params.id, status_tarefa);
         if (!updatedTarefa) {
-            return res.status(404).json({ message: "Tarefa não encontrada!" });
+            return res.status(404).json({ message: "tarefa não encontrada!" });
         }
-        res.status(200).json({ message: "Tarefa atualizada com sucesso!", updatedTarefa });
+        res.status(200).json({ message: "tarefa atualizada com sucesso!", updatedTarefa });
     } catch (error) {
         res.status(404).json({ message: "Erro ao atualizar a tarefa", error });
     }

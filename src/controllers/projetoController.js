@@ -26,11 +26,11 @@ const getProjetoById = async (req, res) => {
 // Criar um novo projeto | POST projetos
 const createProjeto = async (req, res) => {
     try {
-        const { tarefa_id, project } = req.body;
-        if (project !== "BackEnd" && project !== "FrontEnd" && project !== "Mobile" && project !== "Projetos") {
-            return res.status(400).json({ message: "Projeto inválido! Escolha entre as matérias: BackEnd, FrontEnd, Mobile e Projetos." });
+        const { project, teacher } = req.body;
+        if (project !== "BackEnd" && project !== "FrontEnd" && project !== "Mobile" && project !== "Projetos" && project !== "Banco de Dados" && project !== "Design") {
+            return res.status(400).json({ message: "Projeto inválido! Escolha entre as matérias: BackEnd, FrontEnd, Mobile, Projetos Banco de Dados e Design." });
         }    
-        const newProjeto = await projetoModel.createProjeto(tarefa_id, project);
+        const newProjeto = await projetoModel.createProjeto(project, teacher);
         res.status(201).json({ message: "projeto criado com sucesso!", newProjeto });
     } catch (error) {
         res.status(404).json({ message: "Erro ao criar o projeto", error });
@@ -40,8 +40,8 @@ const createProjeto = async (req, res) => {
 // Atualizar um projeto | PUT projetos/:id
 const updateProjeto = async (req, res) => {
     try {
-        const { tarefa_id, project } = req.body;
-        const updatedProjeto = await projetoModel.updateProjeto(req.params.id, tarefa_id, project);
+        const { teacher } = req.body;
+        const updatedProjeto = await projetoModel.updateProjeto(req.params.id, teacher);
         if (!updatedProjeto) {
             return res.status(404).json({ message: "projeto não encontrado!" });
         }

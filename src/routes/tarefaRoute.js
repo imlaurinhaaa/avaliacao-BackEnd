@@ -3,6 +3,10 @@ const router = express.Router();
 const tarefaController = require("../controllers/tarefaController");
 const upload = require("../config/upload");
 
+const apiKeyMiddleware = require("../config/apiKey");
+
+router.use(apiKeyMiddleware);
+
 // Listar todas as tarefas | GET tarefas
 router.get("/tarefas", tarefaController.getAllTarefas);
 

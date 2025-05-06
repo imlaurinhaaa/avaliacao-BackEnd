@@ -2,6 +2,10 @@ const express = require("express");
 const router = express.Router();
 const projetoController = require("../controllers/projetoController");
 
+const apiKeyMiddleware = require("../config/apiKey");
+
+router.use(apiKeyMiddleware);
+
 // Listar todas as projetos | GET projetos
 router.get("/projetos", projetoController.getAllProjetos);
 

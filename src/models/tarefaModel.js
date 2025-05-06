@@ -1,13 +1,23 @@
 const pool = require("../config/database");
 
 // Listar todas as tarefas
-const getTarefas = async () => {
+const getTarefas = async (status_tarefa) => {
+    if (!status_tarefa) {
         const result = await pool.query(
             `SELECT tarefas.id, tarefas.name AS aluno, tarefas.photo AS foto, projetos.project AS materia, tarefas.status_tarefa AS status, tarefas.description AS descricao, projetos.teacher AS professor
             FROM tarefas
             LEFT JOIN projetos ON tarefas.projeto_id = projetos.id`
         );
         return result.rows;
+    } else {
+        const result = await pool.query(
+            `SELECT tarefas.id, tarefas.name AS aluno, tarefas.photo AS foto, projetos.project AS materia, tarefas.status_tarefa AS status, tarefas.description AS descricao, projetos.teacher AS professor
+            FROM tarefas
+            LEFT JOIN projetos ON tarefas.projeto_id = projetos.id
+            WHERE tarefas.status_tarefa ILIKE $1`, [`%${status_tarefa}%`]
+        );
+        return result.rows;
+    }
 };
 
 // Listar uma tarefa apenas pelo seu ID

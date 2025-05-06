@@ -3,7 +3,8 @@ const tarefaModel = require("../models/tarefaModel");
 // Listar todas as tarefas | GET tarefas
 const getAllTarefas = async (req, res) => {
     try {
-        const tarefas = await tarefaModel.getTarefas();
+        const { status_tarefa } = req.query;
+        const tarefas = await tarefaModel.getTarefas(status_tarefa);
         res.status(200).json({ message: "Aqui estão as tarefas disponíveis!", tarefas });
     } catch (error) {
         res.status(404).json({ message: "Erro ao listar as tarefas", error });

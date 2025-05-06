@@ -63,17 +63,16 @@ const exportTarefasPDF = async (req, res) => {
 
         // Cabeçalho da Tabela
         const tableTop = 130; 
-        const rowHeight = 25; 
-        const columnWidths = [70, 100, 200, 200, 200, 200]; 
+        const rowHeight = 45; 
+        const columnWidths = [70, 100, 100, 100, 100, 150]; 
         let y = tableTop;
         
         doc.fontSize(12).font("Helvetica-Bold");
         doc.text("Id", 50, y, { width: columnWidths[0], align: "left" });
         doc.text("Projeto_id", 100, y, { width: columnWidths[1], align: "left" });
         doc.text("Name", 180, y, { width: columnWidths[2], align: "left" });
-        doc.text("Photo", 240, y, { width: columnWidths[3], align: "left" });
-        doc.text("Status_tarefa", 300, y, { width: columnWidths[4], align: "left" });
-        doc.text("Description", 400, y, { width: columnWidths[5], align: "left" });
+        doc.text("Status_tarefa", 300, y, { width: columnWidths[3], align: "left" });
+        doc.text("Description", 400, y, { width: columnWidths[4], align: "left" });
         doc.moveTo(50, y + rowHeight - 5).lineTo(550, y + rowHeight - 5).stroke(); 
         
         // Dados da Tabela
@@ -81,11 +80,10 @@ const exportTarefasPDF = async (req, res) => {
         y += rowHeight;
         tarefas.forEach((tarefa) => {
             doc.text(tarefa.id, 50, y, { width: columnWidths[0], align: "left" });
-            doc.text(tarefa.projeto_id, 100, y, { width: columnWidths[1], align: "left" });
-            doc.text(tarefa.name, 180, y, { width: columnWidths[2], align: "left" });
-            doc.text(tarefa.photo, 240, y, { width: columnWidths[3], align: "left" });
-            doc.text(tarefa.status_tarefa, 300, y, { width: columnWidths[4], align: "left" });
-            doc.text(tarefa.description, 400, y, { width: columnWidths[5], align: "left" });
+            doc.text(tarefa.materia, 100, y, { width: columnWidths[1], align: "left" });
+            doc.text(tarefa.aluno, 180, y, { width: columnWidths[2], align: "left" });
+            doc.text(tarefa.status, 300, y, { width: columnWidths[3], align: "left" });
+            doc.text(tarefa.descricao, 400, y, { width: columnWidths[4], align: "left" });
             y += rowHeight;
         
             doc.moveTo(50, y - 5).lineTo(550, y - 5).stroke();
